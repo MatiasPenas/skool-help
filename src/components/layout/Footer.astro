@@ -1,0 +1,25 @@
+---
+const accentColors = ['text-accent-yellow', 'text-accent-purple', 'text-accent-green', 'text-accent-pink', 'text-accent-blue', 'text-accent-orange', 'text-accent-yellow', 'text-accent-purple', 'text-accent-green'];
+const brandLetters = 'SKOOL.HELP'.split('');
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-border/50 py-8">
+  <div class="max-w-[1400px] mx-auto px-4">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-0 text-sm font-bold tracking-tight">
+        {brandLetters.map((letter, i) => (
+          <span class={accentColors[i % accentColors.length]}>{letter}</span>
+        ))}
+      </a>
+      <nav class="flex items-center gap-6">
+        <a href="/tools/ads-calculator-premium" class="text-xs text-muted-foreground hover:text-foreground transition-colors">
+          Ads Calculator
+        </a>
+      </nav>
+      <p class="text-xs text-muted-foreground">
+        &copy; {year} SKOOL.HELP. Not affiliated with Skool.com.
+      </p>
+    </div>
+  </div>
+</footer>

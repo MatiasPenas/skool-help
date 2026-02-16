@@ -1,0 +1,11 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AdsCalculator from '@/components/calculator/AdsCalculator';
+---
+
+<BaseLayout
+  title="Ads Calculator (Premium) | SKOOL.HELP"
+  description="Model your Skool community's unit economics. Simulate ad spend, member growth, churn, and profitability over 12 months."
+>
+  <AdsCalculator client:only="react" />
+</BaseLayout>
