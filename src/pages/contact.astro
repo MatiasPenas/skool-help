@@ -1,0 +1,94 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const success = Astro.url.searchParams.get("success") === "true";
+---
+
+<BaseLayout
+  title="Contact the SKOOL.HELP Team"
+  description="Get in touch with us for questions or suggestions about Skool tools and resources."
+  canonicalUrl="https://skool.help/contact"
+>
+  <div class="max-w-[560px] mx-auto px-6 py-16">
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold tracking-tight">Say hi</h1>
+      <p class="text-muted-foreground mt-2 text-sm">
+        Have a question or suggestion? We'd love to hear from you.
+      </p>
+    </div>
+
+    {
+      success ? (
+        <div class="rounded-xl border border-border bg-card p-8 text-center">
+          <p class="text-lg font-semibold text-foreground">Message sent!</p>
+          <p class="text-sm text-muted-foreground mt-2">
+            Thanks for reaching out. We'll get back to you soon.
+          </p>
+          <a
+            href="/contact"
+            class="inline-block mt-6 text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
+          >
+            Send another message
+          </a>
+        </div>
+      ) : (
+        <form
+          action="https://formspree.io/f/YOUR_FORM_ID"
+          method="POST"
+          class="flex flex-col gap-5"
+        >
+          <div class="flex flex-col gap-1.5">
+            <label for="name" class="text-sm font-medium text-foreground">
+              Name
+            </label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              required
+              placeholder="Your name"
+              class="border-input dark:bg-input/30 h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm text-foreground placeholder:text-muted-foreground shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label for="email" class="text-sm font-medium text-foreground">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              required
+              placeholder="you@example.com"
+              class="border-input dark:bg-input/30 h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm text-foreground placeholder:text-muted-foreground shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label for="message" class="text-sm font-medium text-foreground">
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows="5"
+              placeholder="What's on your mind?"
+              class="border-input dark:bg-input/30 w-full rounded-md border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] resize-none"
+            />
+          </div>
+
+          <input type="hidden" name="_next" value="/contact?success=true" />
+
+          <button
+            type="submit"
+            class="h-9 px-4 rounded-lg text-sm font-medium bg-[#F0CF80] text-black hover:bg-[#F0CF80]/90 transition-colors cursor-pointer self-start"
+          >
+            Send message
+          </button>
+        </form>
+      )
+    }
+  </div>
+</BaseLayout>

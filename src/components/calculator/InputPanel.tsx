@@ -1,104 +1,53 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { CalculatorInputs } from '@/lib/calculator-engine';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { NumberInput } from './NumberInput';
 import { Slider } from '@/components/ui/slider';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Share2, Info, ChevronDown, ChevronUp } from 'lucide-react';
+import { Label } from '@/components/ui/label';
+import { Share2, ArrowRight } from 'lucide-react';
+
+// CAC is expressed as a multiplier of monthlyPrice; initialBudget and monthlyPrice are never touched.
+const SCENARIO_PROFILES: Record<string, { cacMultiplier: number; churnRate: number; reinvestmentPct: number }> = {
+  conservative: { cacMultiplier: 1.5, churnRate: 0.25, reinvestmentPct: 0.30 },
+  realistic:    { cacMultiplier: 1.2, churnRate: 0.20, reinvestmentPct: 1.0  },
+  'the dream':  { cacMultiplier: 0.8, churnRate: 0.08, reinvestmentPct: 1.0  },
+};
+
+function applyScenario(key: string, current: CalculatorInputs): CalculatorInputs {
+  const profile = SCENARIO_PROFILES[key];
+  return {
+    ...current,
+    cac: Math.round(current.monthlyPrice * profile.cacMultiplier),
+    churnRate: profile.churnRate,
+    reinvestmentPct: profile.reinvestmentPct,
+  };
+}
+
+function detectActiveScenario(inputs: CalculatorInputs): string | null {
+  for (const [key, profile] of Object.entries(SCENARIO_PROFILES)) {
+    const expectedCac = Math.round(inputs.monthlyPrice * profile.cacMultiplier);
+    if (
+      inputs.cac === expectedCac &&
+      inputs.churnRate === profile.churnRate &&
+      inputs.reinvestmentPct === profile.reinvestmentPct
+    ) {
+      return key;
+    }
+  }
+  return null;
+}
 
 interface InputPanelProps {
   inputs: CalculatorInputs;
   onChange: <K extends keyof CalculatorInputs>(key: K, value: CalculatorInputs[K]) => void;
+  onPreset: (inputs: CalculatorInputs) => void;
 }
 
-function NumberInput({
-  label,
-  prefix,
-  suffix,
-  value,
-  onChange,
-  min,
-  max,
-  step = 1,
-  tooltip,
-}: {
-  label: string;
-  prefix?: string;
-  suffix?: string;
-  value: number;
-  onChange: (v: number) => void;
-  min: number;
-  max: number;
-  step?: number;
-  tooltip?: string;
-}) {
-  const [localValue, setLocalValue] = useState(String(value));
-
-  const handleBlur = () => {
-    let num = parseFloat(localValue);
-    if (isNaN(num)) num = min;
-    num = Math.max(min, Math.min(max, num));
-    setLocalValue(String(num));
-    onChange(num);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value;
-    setLocalValue(raw);
-    const num = parseFloat(raw);
-    if (!isNaN(num)) {
-      onChange(Math.max(min, Math.min(max, num)));
-    }
-  };
-
-  // Sync when parent value changes (e.g. from URL)
-  React.useEffect(() => {
-    setLocalValue(String(value));
-  }, [value]);
-
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between">
-        <Label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          {label}
-        </Label>
-        {tooltip && (
-          <span className="text-muted-foreground" title={tooltip}>
-            <Info className="size-3.5" />
-          </span>
-        )}
-      </div>
-      <div className="relative">
-        {prefix && (
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-            {prefix}
-          </span>
-        )}
-        <Input
-          type="number"
-          value={localValue}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          min={min}
-          max={max}
-          step={step}
-          className={prefix ? 'pl-7' : suffix ? 'pr-7' : ''}
-        />
-        {suffix && (
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-            {suffix}
-          </span>
-        )}
-      </div>
-    </div>
-  );
-}
-
-export function InputPanel({ inputs, onChange }: InputPanelProps) {
-  const [showAbout, setShowAbout] = useState(false);
+export function InputPanel({ inputs, onChange, onPreset }: InputPanelProps) {
   const [copied, setCopied] = useState(false);
+  const activeScenario = detectActiveScenario(inputs);
 
   const handleShare = async () => {
     try {
@@ -111,9 +60,9 @@ export function InputPanel({ inputs, onChange }: InputPanelProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="bg-card rounded-xl border p-5">
-        <div className="flex items-center justify-between mb-5">
+        <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-lg font-semibold">Ads Calculator</h2>
             <p className="text-xs text-muted-foreground mt-0.5">Premium Skool Community</p>
@@ -121,47 +70,77 @@ export function InputPanel({ inputs, onChange }: InputPanelProps) {
           <Badge className="bg-accent-purple text-white border-accent-purple">Premium</Badge>
         </div>
 
+        {/* Scenario Presets */}
+        <div className="flex gap-1.5 mb-4">
+          {(Object.keys(SCENARIO_PROFILES) as Array<keyof typeof SCENARIO_PROFILES>).map((key) => (
+            <button
+              key={key}
+              onClick={() => onPreset(applyScenario(key, inputs))}
+              className={[
+                'flex-1 rounded-md px-2 py-1 text-[10px] font-medium uppercase tracking-wider transition-colors',
+                activeScenario === key
+                  ? 'bg-accent-purple/20 text-accent-purple border border-accent-purple/40'
+                  : 'bg-muted text-muted-foreground border border-transparent hover:bg-muted/80',
+              ].join(' ')}
+            >
+              {key}
+            </button>
+          ))}
+        </div>
+
         <div className="space-y-4">
-          <NumberInput
-            label="Monthly Price"
-            prefix="$"
-            value={inputs.monthlyPrice}
-            onChange={(v) => onChange('monthlyPrice', v)}
-            min={1}
-            max={10000}
-            tooltip="Monthly subscription price per member"
-          />
+          <div>
+            <NumberInput
+              label="Monthly Price"
+              prefix="$"
+              value={inputs.monthlyPrice}
+              onChange={(v) => onChange('monthlyPrice', v)}
+              min={1}
+              max={10000}
+              tooltip="The monthly subscription price members pay to join your Skool community."
+            />
+            <p className="text-[10px] text-muted-foreground/60 mt-1">Skool communities: $27–$997/mo</p>
+          </div>
 
-          <NumberInput
-            label="CAC (Acquisition Cost)"
-            prefix="$"
-            value={inputs.cac}
-            onChange={(v) => onChange('cac', v)}
-            min={1}
-            max={50000}
-            tooltip="Cost to acquire one new member through ads"
-          />
+          <div>
+            <NumberInput
+              label="CAC (Acquisition Cost)"
+              prefix="$"
+              value={inputs.cac}
+              onChange={(v) => onChange('cac', v)}
+              min={1}
+              max={50000}
+              tooltip="How much you spend on ads to acquire one new paying member. Includes all ad costs divided by conversions."
+            />
+            <p className="text-[10px] text-muted-foreground/60 mt-1">Meta ads for Skool: $80–$150 typical</p>
+          </div>
 
-          <NumberInput
-            label="Churn Rate"
-            suffix="%"
-            value={Math.round(inputs.churnRate * 100)}
-            onChange={(v) => onChange('churnRate', v / 100)}
-            min={1}
-            max={100}
-            tooltip="Percentage of members who cancel each month"
-          />
+          <div>
+            <NumberInput
+              label="Churn Rate"
+              suffix="%"
+              value={Math.round(inputs.churnRate * 100)}
+              onChange={(v) => onChange('churnRate', v / 100)}
+              min={1}
+              max={100}
+              tooltip="The percentage of your paying members who cancel each month. 10% means 1 in 10 members leave monthly."
+            />
+            <p className="text-[10px] text-muted-foreground/60 mt-1">Healthy Skool community: 5–15%/mo</p>
+          </div>
 
-          <NumberInput
-            label="Initial Budget"
-            prefix="$"
-            value={inputs.initialBudget}
-            onChange={(v) => onChange('initialBudget', v)}
-            min={0}
-            max={1000000}
-            step={100}
-            tooltip="First month's ad spend budget"
-          />
+          <div>
+            <NumberInput
+              label="Initial Budget"
+              prefix="$"
+              value={inputs.initialBudget}
+              onChange={(v) => onChange('initialBudget', v)}
+              min={0}
+              max={1000000}
+              step={100}
+              tooltip="Your ad spend budget for month 1. After that, ad spend is calculated from revenue and your reinvestment %."
+            />
+            <p className="text-[10px] text-muted-foreground/60 mt-1">Start small to validate, then scale</p>
+          </div>
 
           <Separator className="my-2" />
 
@@ -199,20 +178,18 @@ export function InputPanel({ inputs, onChange }: InputPanelProps) {
       </Button>
 
       <div className="bg-card rounded-xl border p-4">
-        <button
-          onClick={() => setShowAbout(!showAbout)}
-          className="flex w-full items-center justify-between text-sm font-medium"
+        <p className="text-xs leading-relaxed text-muted-foreground">
+          This calculator models the unit economics of a <strong className="text-foreground">fully paid</strong> Skool
+          community where you use ads to acquire paying members directly. Adjust inputs to see how ad spend,
+          churn, and reinvestment affect your growth over 12 months.
+        </p>
+        <a
+          href="/tools/skool-freemium-calculator"
+          className="mt-3 flex items-center gap-1.5 text-xs font-medium text-accent-green hover:underline"
         >
-          About
-          {showAbout ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
-        </button>
-        {showAbout && (
-          <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-            This interactive calculator simulates the financial trajectory of a premium Skool
-            community using paid ads for member acquisition. Adjust inputs to visualize unit
-            economics, growth compounding, and retention cohorts over 12 months.
-          </p>
-        )}
+          Using a freemium model? Try the Freemium Calculator
+          <ArrowRight className="size-3" />
+        </a>
       </div>
     </div>
   );

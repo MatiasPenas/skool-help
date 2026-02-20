@@ -12,6 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { InfoTooltip } from './InfoTooltip';
 
 interface Props {
   data: MonthData[];
@@ -38,9 +39,10 @@ export function FinancialTable({ data }: Props) {
   return (
     <div className="bg-card rounded-xl border p-5">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold uppercase tracking-wider">
-          Financial Breakdown
-        </h3>
+        <div className="flex items-center gap-1.5">
+          <h3 className="text-sm font-semibold uppercase tracking-wider">Financial Breakdown</h3>
+          <InfoTooltip text="Month-by-month projection of revenue, ad spend, profit, and member count over 12 months." />
+        </div>
         <Button variant="ghost" size="sm" onClick={() => exportCsv(data)} className="gap-1.5 text-xs">
           <Download className="size-3.5" />
           CSV

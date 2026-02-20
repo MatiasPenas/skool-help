@@ -1,4 +1,5 @@
 import React from 'react';
+import { InfoTooltip } from './InfoTooltip';
 import {
   XAxis,
   YAxis,
@@ -35,9 +36,12 @@ export function GrowthChart({ data }: Props) {
 
   return (
     <div className="bg-card rounded-xl border p-5">
-      <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">
-        Growth Trajectory (12 Months)
-      </h3>
+      <div className="flex items-center gap-2 mb-4">
+        <h3 className="text-sm font-semibold uppercase tracking-wider">
+          Growth Trajectory (12 Months)
+        </h3>
+        <InfoTooltip text="Shows how your total paying member count grows over 12 months, based on new members acquired through ads minus monthly churn." />
+      </div>
       <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>

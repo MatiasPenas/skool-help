@@ -1,20 +1,11 @@
 ---
-import HomePage from '@/components/homepage/HomePage';
-import '@/styles/global.css';
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import HomePage from "@/components/homepage/HomePage";
 ---
 
-<!DOCTYPE html>
-<html lang="en" class="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Design resources featured by our curators" />
-  <title>NICEVERY.NICE - Design Resources</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-</head>
-<body>
+<BaseLayout
+  title="SKOOL.HELP | Free Tools & Resources for Skool Community Owners"
+  description="Free tools, swipe files, and guides for Skool community owners. Grow your community with our ads calculators, DM templates, and expert advice."
+>
   <HomePage client:load />
-</body>
-</html>
+</BaseLayout>

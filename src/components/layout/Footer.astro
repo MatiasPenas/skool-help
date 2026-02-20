@@ -1,24 +1,51 @@
 ---
-const accentColors = ['text-accent-yellow', 'text-accent-purple', 'text-accent-green', 'text-accent-pink', 'text-accent-blue', 'text-accent-orange', 'text-accent-yellow', 'text-accent-purple', 'text-accent-green'];
-const brandLetters = 'SKOOL.HELP'.split('');
+import { Separator } from "@/components/ui/separator";
+import * as Constants from "@/lib/constants";
+
+const brandLetters = [
+  { char: "S", color: "#263397" },
+  { char: "k", color: "#D3513E" },
+  { char: "o", color: "#E0B467" },
+  { char: "o", color: "#6BB7EE" },
+  { char: "l", color: "#C45946" },
+  { char: ".", color: "white" },
+  { char: "H", color: "white" },
+  { char: "e", color: "white" },
+  { char: "l", color: "white" },
+  { char: "p", color: "white" },
+];
+
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-border/50 py-8">
-  <div class="max-w-[1400px] mx-auto px-4">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-      <a href="/" class="flex items-center gap-0 text-sm font-bold tracking-tight">
-        {brandLetters.map((letter, i) => (
-          <span class={accentColors[i % accentColors.length]}>{letter}</span>
-        ))}
-      </a>
-      <nav class="flex items-center gap-6">
-        <a href="/tools/ads-calculator-premium" class="text-xs text-muted-foreground hover:text-foreground transition-colors">
-          Ads Calculator
-        </a>
-      </nav>
-      <p class="text-xs text-muted-foreground">
-        &copy; {year} SKOOL.HELP. Not affiliated with Skool.com.
+<footer class="py-12 border-t border-border mt-12 bg-background">
+  <div class="max-w-[1200px] mx-auto px-6 text-center">
+    <nav class="flex items-center justify-center gap-6 mb-6">
+      {
+        Constants.NAV_ITEMS.map((item) => (
+          <a
+            href={item.href}
+            class="text-xs text-muted-foreground hover:text-foreground transition-colors tracking-wider uppercase"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div
+      class="flex items-center justify-center gap-0.5 text-sm font-bold tracking-wider mb-8"
+    >
+      {brandLetters.map((item) => <span style={`color: ${item.color}`}>{item.char}</span>)}
+    </div>
+
+    <div class="flex flex-col items-center gap-4">
+      <Separator className="w-12 bg-border" />
+      <p class="text-[10px] text-muted-foreground tracking-[0.2em] uppercase">
+        &copy; {year} SKOOL.HELP
+      </p>
+      <p class="text-[11px] text-muted-foreground max-w-md leading-relaxed">
+        SKOOL.HELP is an independent resource and is not affiliated with, endorsed by, or operated by Skool.com Inc. Some links on this site are affiliate links&mdash;if you make a purchase through them, we may earn a commission at no extra cost to you.
       </p>
     </div>
   </div>

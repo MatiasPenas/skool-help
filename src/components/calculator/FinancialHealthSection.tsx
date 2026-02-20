@@ -1,11 +1,11 @@
 import React from 'react';
 import type { UnitEconomics } from '@/lib/calculator-engine';
 import { MetricCard } from './MetricCard';
-import { TrendingUp, Clock, Users, DollarSign, Target } from 'lucide-react';
+import { TrendingUp, Clock, Users, DollarSign } from 'lucide-react';
 
 interface Props {
   economics: UnitEconomics;
-  breakEvenMonth: number | null;
+  breakEvenMonth?: number | null;
 }
 
 function getRatioStatus(ratio: number): 'good' | 'warning' | 'danger' {
@@ -20,7 +20,7 @@ function getPaybackStatus(months: number): 'good' | 'warning' | 'danger' {
   return 'danger';
 }
 
-export function FinancialHealthSection({ economics, breakEvenMonth }: Props) {
+export function FinancialHealthSection({ economics }: Props) {
   return (
     <div>
       <div className="flex items-center gap-2 mb-4">
@@ -32,6 +32,7 @@ export function FinancialHealthSection({ economics, breakEvenMonth }: Props) {
           label="LTV : CAC Ratio"
           value={`${economics.ltvCacRatio.toFixed(1)}x`}
           subtext="Target > 3.0x"
+          tooltip="Ratio of customer lifetime value to acquisition cost. Above 3x is healthy, below 1x means you lose money per customer."
           status={getRatioStatus(economics.ltvCacRatio)}
           icon={<TrendingUp className="size-4" />}
         />
@@ -39,13 +40,15 @@ export function FinancialHealthSection({ economics, breakEvenMonth }: Props) {
           label="Payback Period"
           value={`${economics.paybackMonths.toFixed(1)} mo`}
           subtext="Time to recover CAC"
+          tooltip="Months of subscription revenue needed to recover the cost of acquiring one member. Under 3 months is great."
           status={getPaybackStatus(economics.paybackMonths)}
           icon={<Clock className="size-4" />}
         />
         <MetricCard
           label="Avg. Retention"
           value={`${economics.avgRetentionMonths.toFixed(1)} mo`}
-          subtext="Average customer lifespan"
+          subtext="Average member lifespan"
+          tooltip="How long an average member stays before canceling, based on your churn rate. Calculated as 1 / churn rate."
           status="neutral"
           icon={<Users className="size-4" />}
         />
@@ -53,21 +56,11 @@ export function FinancialHealthSection({ economics, breakEvenMonth }: Props) {
           label="Customer LTV"
           value={`$${Math.round(economics.ltv).toLocaleString()}`}
           subtext="Lifetime Value"
+          tooltip="Total revenue you can expect from one member over their entire lifetime. Calculated as monthly price / churn rate."
           status="neutral"
           icon={<DollarSign className="size-4" />}
         />
       </div>
-      {breakEvenMonth !== null && (
-        <div className="mt-3">
-          <MetricCard
-            label="Break-Even Month"
-            value={`Month ${breakEvenMonth}`}
-            subtext="When cumulative profit turns positive"
-            status={breakEvenMonth <= 3 ? 'good' : breakEvenMonth <= 6 ? 'warning' : 'danger'}
-            icon={<Target className="size-4" />}
-          />
-        </div>
-      )}
     </div>
   );
 }

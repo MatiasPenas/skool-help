@@ -9,8 +9,8 @@ import {
 
 const DEFAULT_INPUTS: CalculatorInputs = {
   monthlyPrice: 99,
-  cac: 75,
-  churnRate: 0.10,
+  cac: 120,
+  churnRate: 0.20,
   initialBudget: 1000,
   reinvestmentPct: 1.0,
 };

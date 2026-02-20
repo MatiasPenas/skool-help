@@ -1,0 +1,242 @@
+[
+  {
+    "id": "start-short-1",
+    "category": "Start a Conversation",
+    "length": "Short",
+    "message": "Hey #NAME#! Welcome to #GROUPNAME#! What made you decide to join today?"
+  },
+  {
+    "id": "upgrade-short-1",
+    "category": "Offer Upgrade",
+    "length": "Short",
+    "message": "Hey #NAME#! Welcome to #GROUPNAME#! Glad you're here. Just so you know, if you ever want to unlock the full experience we have a premium plan here 👉 [LINK] Hope to see you on the inside 🙌"
+  },
+  {
+    "id": "referral-short-1",
+    "category": "Drive Referrals",
+    "length": "Short",
+    "message": "Hey #NAME#! Welcome to #GROUPNAME#! Quick question, is there anyone in your world who should be in here with you?"
+  },
+  {
+    "id": "upgrade-medium-2",
+    "category": "Offer Upgrade",
+    "length": "Medium",
+    "message": "#NAME#! So glad you joined. Quick heads up, the free plan gives you a solid taste of what we do here but the real results happen inside the premium plan. That's where you get [KEY PREMIUM BENEFIT] and direct access to [YOUR NAME]. Upgrade here whenever you're ready 👉 [LINK] 🙌"
+  },
+  {
+    "id": "upgrade-medium-3",
+    "category": "Offer Upgrade",
+    "length": "Medium",
+    "message": "Hey #NAME#, welcome! You're in on the free plan right now which is awesome. Just wanted to make sure you knew that our premium members get a completely different experience including [BENEFIT 1] and [BENEFIT 2]. If that sounds interesting to you, check it out here 👉 [LINK] No pressure at all, just wanted you to know it exists 😊"
+  },
+  {
+    "id": "link-long-3",
+    "category": "Drive to a Link",
+    "length": "Long",
+    "message": "Hey #NAME#, welcome to #GROUPNAME#!\n\nHere's exactly what to do right now so you don't waste any time:\n\n1️⃣ Head to the Start Here post 👉 [LINK]\n2️⃣ Watch the first video\n3️⃣ Drop your intro in the community\n4️⃣ Come back here and tell me your #1 goal\n\nI personally read every message so don't be shy. Let's get you some wins 🔥"
+  },
+  {
+    "id": "upgrade-long-1",
+    "category": "Offer Upgrade",
+    "length": "Long",
+    "message": "Hey #NAME#! Welcome to #GROUPNAME# 🙌\n\nYou're on the free plan right now which is a great starting point.\n\nBut I want to be upfront with you about something.\n\nThe free plan gives you a taste of what we do here. The premium plan is where the real transformation happens. That's where you get [BENEFIT 1], [BENEFIT 2], and direct access to [YOUR NAME/THE TEAM] when you need help.\n\nMost of our members who are serious about [DESIRED RESULT] upgrade pretty quickly once they see what's inside.\n\nTake a look here 👉 [LINK] and let me know if you have any questions. Happy to help you figure out if it's the right move for you 😊"
+  },
+  {
+    "id": "start-long-2",
+    "category": "Start a Conversation",
+    "length": "Long",
+    "message": "#NAME#! So glad you're here.\n\nI started #GROUPNAME# because I wanted a place where people could get real help and real results. Not just another group full of generic advice.\n\nSo I want to ask you straight up, what's the thing you've been most stuck on lately?\n\nLet's see if we can crack it together 🙌"
+  },
+  {
+    "id": "upgrade-short-2",
+    "category": "Offer Upgrade",
+    "length": "Short",
+    "message": "#NAME#! Welcome 🎉 You're on the free plan right now but if you want access to [PREMIUM BENEFIT] you can upgrade here 👉 [LINK] Either way, glad to have you!"
+  },
+  {
+    "id": "link-short-2",
+    "category": "Drive to a Link",
+    "length": "Short",
+    "message": "#NAME#! Welcome 🎉 Your first move 👉 [LINK] Everything you need is in there!"
+  },
+  {
+    "id": "start-medium-1",
+    "category": "Start a Conversation",
+    "length": "Medium",
+    "message": "Hey #NAME#, welcome to #GROUPNAME#! I ask every new member the same question, what does winning look like for you 6 months from now? Your answer helps me make sure you get the most out of being here 👊"
+  },
+  {
+    "id": "referral-long-1",
+    "category": "Drive Referrals",
+    "length": "Long",
+    "message": "Hey #NAME#! Welcome to #GROUPNAME# 🎉\n\nSo glad you're here.\n\nQuick thing I always ask new members, is there anyone in your world who should be in here with you?\n\nA friend, a business partner, a colleague who's dealing with the same challenges you are right now.\n\nWe've found that people who go through #GROUPNAME# with someone they know get dramatically better results than people who go it alone. Makes sense when you think about it.\n\nIf someone comes to mind send them this 👉 [LINK]"
+  },
+  {
+    "id": "referral-medium-1",
+    "category": "Drive Referrals",
+    "length": "Medium",
+    "message": "Hey #NAME#, welcome to #GROUPNAME#! We've found that people who go through this community with a friend or colleague get way better results than people who go it alone. Is there anyone in your world you think would love it here? Even just one person could make a huge difference 🙌"
+  },
+  {
+    "id": "referral-medium-3",
+    "category": "Drive Referrals",
+    "length": "Medium",
+    "message": "Hey #NAME#! Welcome 🎉 Before you dive in I want to ask you something. Is there one person in your life who would absolutely love #GROUPNAME#? A friend, a colleague, someone you've been wanting to share this with? The more the merrier and honestly it makes the whole experience better for everyone 😄"
+  },
+  {
+    "id": "link-short-1",
+    "category": "Drive to a Link",
+    "length": "Short",
+    "message": "Hey #NAME#! Welcome to #GROUPNAME#! Head here first to get started 👉 [LINK] See you on the inside!"
+  },
+  {
+    "id": "link-long-2",
+    "category": "Drive to a Link",
+    "length": "Long",
+    "message": "#NAME#! Welcome to the family 🏡\n\nQuick tip before you dive in. Members who go through the Start Here module in the first 24 hours get way more out of this community than people who skip it.\n\nGo here first 👉 [LINK]\n\nOnce you've had a look around come back and tell me your biggest goal right now. I want to make sure #GROUPNAME# actually moves the needle for you 🎯"
+  },
+  {
+    "id": "upgrade-long-2",
+    "category": "Offer Upgrade",
+    "length": "Long",
+    "message": "#NAME#! So glad you're here.\n\nQuick thing I tell every new free member, take a few days to look around and get a feel for the community.\n\nThen when you're ready to go all in, the premium plan unlocks everything.\n\nWe're talking [BENEFIT 1], [BENEFIT 2], [BENEFIT 3], and a community of people who are seriously committed to [GOAL].\n\nThe difference between free and premium members in terms of results is pretty significant if I'm being honest.\n\nWhen you're ready 👉 [LINK]\n\nNo pressure, just want you to know the option is there 👊"
+  },
+  {
+    "id": "start-short-2",
+    "category": "Start a Conversation",
+    "length": "Short",
+    "message": "#NAME#! Glad you're here. Quick question, what's your biggest goal right now?"
+  },
+  {
+    "id": "link-medium-4",
+    "category": "Drive to a Link",
+    "length": "Medium",
+    "message": "#NAME#, welcome to #GROUPNAME#! I know it can feel overwhelming joining somewhere new so I always point people to the same place first. Go here 👉 [LINK] Everything else can wait. Start there and you'll know exactly what to do next 👊"
+  },
+  {
+    "id": "start-long-3",
+    "category": "Start a Conversation",
+    "length": "Long",
+    "message": "Hey #NAME#, welcome!\n\nQuick thing about me, I personally DM every new member who joins #GROUPNAME# because this community only works if the right people are actually talking to each other.\n\nSo let's start here. Tell me a little about yourself. What do you do, who do you help, and what made you decide to join today?\n\nLooking forward to getting to know you 😊"
+  },
+  {
+    "id": "upgrade-short-3",
+    "category": "Offer Upgrade",
+    "length": "Short",
+    "message": "Welcome to #GROUPNAME#, #NAME#! Take a look around and if you decide you want the full experience, upgrading is easy 👉 [LINK] Let me know if you have any questions 😊"
+  },
+  {
+    "id": "start-short-3",
+    "category": "Start a Conversation",
+    "length": "Short",
+    "message": "Yo #NAME#! Welcome! Be honest, what's the one thing you're most stuck on?"
+  },
+  {
+    "id": "link-short-3",
+    "category": "Drive to a Link",
+    "length": "Short",
+    "message": "Welcome to #GROUPNAME#, #NAME#! Start here 👉 [LINK] Then come back and tell me what you think!"
+  },
+  {
+    "id": "referral-short-2",
+    "category": "Drive Referrals",
+    "length": "Short",
+    "message": "#NAME#! Welcome 🎉 Fun fact, members who join with a friend get 3x the results. Anyone come to mind?"
+  },
+  {
+    "id": "start-medium-2",
+    "category": "Start a Conversation",
+    "length": "Medium",
+    "message": "#NAME#! So glad you joined. Real talk, what's your business looking like right now? I'll point you to exactly where you need to start 🙌"
+  },
+  {
+    "id": "link-medium-3",
+    "category": "Drive to a Link",
+    "length": "Medium",
+    "message": "Hey #NAME#! Welcome 🙌 Here's your one job right now. Head to the Start Here post, watch the first video, and drop your intro in the community. Go here 👉 [LINK] Can't wait to see you in there!"
+  },
+  {
+    "id": "referral-medium-2",
+    "category": "Drive Referrals",
+    "length": "Medium",
+    "message": "#NAME#! So glad you joined. Quick thing, the people who get the most out of #GROUPNAME# are the ones who bring someone they know into the community with them. Think about it, who in your network is dealing with the same stuff you are right now? They should be in here too 👊"
+  },
+  {
+    "id": "start-medium-4",
+    "category": "Start a Conversation",
+    "length": "Medium",
+    "message": "#NAME#, welcome to #GROUPNAME#! I personally reach out to every new member because I want to know who's actually in here. So tell me, what's going on in your world right now?"
+  },
+  {
+    "id": "referral-short-3",
+    "category": "Drive Referrals",
+    "length": "Short",
+    "message": "Welcome to #GROUPNAME#, #NAME#! Who's the first person you thought of when you joined who should be here too? 😄"
+  },
+  {
+    "id": "upgrade-medium-1",
+    "category": "Offer Upgrade",
+    "length": "Medium",
+    "message": "Hey #NAME#, welcome to #GROUPNAME#! You're starting on the free plan which is a great place to get a feel for things. When you're ready to go deeper, our premium members get access to [BENEFIT 1], [BENEFIT 2], and [BENEFIT 3]. You can upgrade anytime here 👉 [LINK] Let me know if you have any questions!"
+  },
+  {
+    "id": "link-medium-2",
+    "category": "Drive to a Link",
+    "length": "Medium",
+    "message": "#NAME#! So glad you joined. People who start with the Start Here module get results way faster than people who just poke around. Go here first 👉 [LINK] Then come back and tell me your biggest goal!"
+  },
+  {
+    "id": "link-medium-1",
+    "category": "Drive to a Link",
+    "length": "Medium",
+    "message": "Hey #NAME#, welcome to #GROUPNAME#! Before you do anything else, head to the Start Here post 👉 [LINK] It'll show you exactly where to go so you're not just wandering around 😄 See you on the inside!"
+  },
+  {
+    "id": "start-long-1",
+    "category": "Start a Conversation",
+    "length": "Long",
+    "message": "Hey #NAME#! Welcome to #GROUPNAME# 🎉\n\nI reach out to every single new member personally because I want to make sure you get real results here, not just join and disappear.\n\nSo tell me, what's going on in your world right now and what made you decide to join today?\n\nOnce I know where you're at I'll point you to exactly the right place to start 👊"
+  },
+  {
+    "id": "start-medium-3",
+    "category": "Start a Conversation",
+    "length": "Medium",
+    "message": "Hey #NAME#, welcome! One question before you dive in, are you brand new to this or are you looking to level up something you're already doing? Either way I got you, just let me know 😄"
+  },
+  {
+    "id": "upgrade-long-3",
+    "category": "Offer Upgrade",
+    "length": "Long",
+    "message": "Hey #NAME#, welcome to #GROUPNAME#!\n\nI personally reach out to every new member because I want to make sure you actually get results here, not just join and poke around for a week.\n\nSo let me be straight with you.\n\nThe free plan is a great way to see if #GROUPNAME# is the right fit for you.\n\nBut if you're serious about [DESIRED RESULT], the premium plan is where that actually happens. That's where you get access to [BENEFIT 1], [BENEFIT 2], and a group of people who are fully committed to making it work.\n\nA lot of our best success stories started exactly where you are right now and upgraded within the first few days.\n\nTake a look and see if it feels right 👉 [LINK]\n\nEither way I'm glad you're here and I'm rooting for you 🎯"
+  },
+  {
+    "id": "upgrade-medium-4",
+    "category": "Offer Upgrade",
+    "length": "Medium",
+    "message": "#NAME#! Welcome to #GROUPNAME# 🎉 Glad you started with the free plan, it's the perfect way to see if this is the right fit for you. But if you're serious about [DESIRED RESULT], the premium plan is where that actually happens. Take a look and see if it makes sense for you 👉 [LINK]"
+  },
+  {
+    "id": "link-long-1",
+    "category": "Drive to a Link",
+    "length": "Long",
+    "message": "Hey #NAME#! Welcome to #GROUPNAME# 🎉\n\nHere's what I want you to do first.\n\nHead to the Start Here post 👉 [LINK]\n\nIt'll show you exactly how everything works, where to go, and what to do so you can hit the ground running instead of feeling lost.\n\nThen come back here and tell me the one thing you most want to get out of being here. I read every single reply 😊"
+  },
+  {
+    "id": "referral-long-3",
+    "category": "Drive Referrals",
+    "length": "Long",
+    "message": "Hey #NAME#, welcome to #GROUPNAME#!\n\nI personally reach out to every new member because I want to make sure you get real results here, not just join and forget about it.\n\nAnd one of the best things you can do from day one is bring someone you know into the community with you.\n\nSeriously, people who go through this with a friend or colleague get 3x the results. It keeps you accountable, gives you someone to bounce ideas off, and makes the whole thing way more fun.\n\nWho's the first person that came to mind just now?\n\nSend them this 👉 [LINK] and let's get them in here 🔥"
+  },
+  {
+    "id": "referral-medium-4",
+    "category": "Drive Referrals",
+    "length": "Medium",
+    "message": "#NAME#, welcome to #GROUPNAME#! Real talk, communities like this are so much better when you're going through it with people you actually know. Who's the first person that came to mind when you joined? Send them this link 👉 [LINK] and let's get them in here too 🙌"
+  },
+  {
+    "id": "referral-long-2",
+    "category": "Drive Referrals",
+    "length": "Long",
+    "message": "#NAME#! Welcome to the family 🏡\n\nHere's something we've noticed after watching hundreds of members come through #GROUPNAME#.\n\nThe ones who get the best results almost always have someone in their corner going through it with them. A friend, a partner, a colleague who's on the same journey.\n\nSo while you're getting settled in, think about one person in your world who would love it here.\n\nSend them this link 👉 [LINK] and let's get them in here too. You'll both be glad you did 🙌"
+  }
+]

@@ -1,0 +1,55 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import * as Constants from "@/lib/constants";
+---
+
+<BaseLayout
+  title="Best Skool Communities for Owners: Learn and Grow | SKOOL.HELP"
+  description="Join the best Skool communities for owners to learn build, grow, and monetize."
+  canonicalUrl="https://skool.help/communities"
+>
+  <div class="max-w-[1200px] mx-auto px-6 py-16">
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold tracking-tight">
+        Communities for Skool Owners
+      </h1>
+      <p class="text-muted-foreground mt-2 text-sm">
+        Join the best communities for Skool owners. Learn, connect, and grow.
+        Some links are affiliate links. We earn commission if you join, at no
+        extra cost to you.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      {
+        Constants.SKOOL_COMMUNITIES.map((community) => (
+          <a
+            href={community.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-4 p-4 rounded-xl border border-border bg-card hover:bg-white/10 transition-colors duration-200 group"
+          >
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+              <img
+                src={community.image}
+                alt={community.name}
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 ease-out"
+              />
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold text-foreground truncate">
+                {community.name}
+              </p>
+              <p class="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+                {community.description}
+              </p>
+            </div>
+            <span class="text-xs font-semibold text-muted-foreground border border-border rounded-full px-3 py-1 flex-shrink-0 group-hover:text-foreground group-hover:border-foreground transition-colors">
+              JOIN
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { InfoTooltip } from './InfoTooltip';
 import {
   BarChart,
   Bar,
@@ -45,9 +46,12 @@ export function AcquisitionChurnChart({ data }: Props) {
 
   return (
     <div className="bg-card rounded-xl border p-5">
-      <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">
-        Acquisition vs Churn
-      </h3>
+      <div className="flex items-center gap-2 mb-4">
+        <h3 className="text-sm font-semibold uppercase tracking-wider">
+          Acquisition vs Churn
+        </h3>
+        <InfoTooltip text="Monthly members acquired through ads (green) vs. members lost to churn (pink). When green bars outpace pink, your community is growing." />
+      </div>
       <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData} margin={{ top: 5, right: 5, left: 0, bottom: 5 }} stackOffset="sign">
@@ -67,7 +71,7 @@ export function AcquisitionChurnChart({ data }: Props) {
             <Tooltip content={<CustomTooltip />} />
             <ReferenceLine y={0} stroke="hsl(0 0% 25%)" />
             <Bar dataKey="acquired" fill="#22c55e" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="churned" fill="#ec4899" radius={[0, 0, 4, 4]} />
+            <Bar dataKey="churned" fill="#ec4899" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>

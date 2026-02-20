@@ -4,24 +4,24 @@
 
 @layer base {
   :root {
-    --background: 0 0% 4%;
+    --background: 0 0% 12%;
     --foreground: 0 0% 100%;
-    --card: 0 0% 8%;
+    --card: 0 0% 18%;
     --card-foreground: 0 0% 100%;
-    --popover: 0 0% 8%;
+    --popover: 0 0% 18%;
     --popover-foreground: 0 0% 100%;
     --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 4%;
-    --secondary: 0 0% 12%;
+    --primary-foreground: 0 0% 12%;
+    --secondary: 0 0% 22%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 12%;
+    --muted: 0 0% 22%;
     --muted-foreground: 0 0% 63%;
-    --accent: 0 0% 15%;
+    --accent: 0 0% 22%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 16%;
-    --input: 0 0% 16%;
+    --border: 0 0% 27%;
+    --input: 0 0% 27%;
     --ring: 0 0% 100%;
     --radius: 0.75rem;
   }
@@ -37,6 +37,97 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+@layer components {
+  .article-prose {
+    @apply text-lg text-foreground/85;
+    line-height: 1.8;
+  }
+  .article-prose h2 {
+    @apply text-2xl md:text-3xl font-bold mt-12 mb-4 text-foreground;
+  }
+  .article-prose h3 {
+    @apply text-xl md:text-2xl font-semibold mt-10 mb-3 text-foreground;
+  }
+  .article-prose p {
+    @apply mb-7;
+  }
+  .article-prose a {
+    @apply text-blue-400 underline underline-offset-2 hover:text-blue-300 transition-colors;
+  }
+  .article-prose ul,
+  .article-prose ol {
+    @apply mb-7 pl-6 space-y-3;
+  }
+  .article-prose ul {
+    @apply list-disc;
+  }
+  .article-prose ol {
+    @apply list-decimal;
+  }
+  .article-prose li {
+    @apply text-foreground/85;
+  }
+  .article-prose strong {
+    @apply text-foreground font-semibold;
+  }
+  .article-prose blockquote {
+    @apply border-l-2 border-foreground/20 pl-6 my-8 italic text-foreground/70;
+  }
+  .article-prose code {
+    @apply bg-secondary px-1.5 py-0.5 rounded text-sm font-mono;
+  }
+  .article-prose pre {
+    @apply bg-secondary rounded-lg p-4 mb-6 overflow-x-auto;
+  }
+  .article-prose pre code {
+    @apply bg-transparent p-0;
+  }
+  .article-prose img {
+    @apply rounded-lg my-8 w-full;
+  }
+  .article-prose hr {
+    @apply my-10 border-border;
+  }
+  .article-prose table {
+    @apply w-full my-8 text-sm;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+  .article-prose thead {
+    background: hsl(0 0% 20%);
+  }
+  .article-prose thead th {
+    @apply px-4 py-3 text-left font-semibold text-foreground whitespace-nowrap;
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  .article-prose thead th:not(:last-child) {
+    border-right: 1px solid hsl(var(--border));
+  }
+  .article-prose tbody tr {
+    transition: background 0.1s;
+  }
+  .article-prose tbody tr:not(:last-child) td {
+    border-bottom: 1px solid hsl(var(--border) / 0.5);
+  }
+  .article-prose tbody tr:hover {
+    background: hsl(0 0% 15%);
+  }
+  .article-prose tbody td {
+    @apply px-4 py-3 align-top;
+    color: hsl(var(--foreground) / 0.75);
+  }
+  .article-prose tbody td:first-child {
+    @apply font-medium;
+    color: hsl(var(--foreground));
+  }
+  .article-prose tbody td:not(:last-child) {
+    border-right: 1px solid hsl(var(--border) / 0.4);
   }
 }
 

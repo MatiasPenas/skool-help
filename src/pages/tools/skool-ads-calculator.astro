@@ -1,0 +1,12 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AdsCalculator from "@/components/calculator/AdsCalculator";
+---
+
+<BaseLayout
+  title="Skool Ads Break-Even Calculator | Know When Your Ads Become Profitable"
+  description="Calculate exactly when your Meta ads to a Skool paid community become profitable. Enter your membership price, ad budget, and churn. See your break-even month."
+  canonicalUrl="https://skool.help/tools/skool-ads-calculator"
+>
+  <AdsCalculator client:only="react" />
+</BaseLayout>

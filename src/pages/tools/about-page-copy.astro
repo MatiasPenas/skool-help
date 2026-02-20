@@ -1,0 +1,22 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AboutPageExamples from "@/components/examples/AboutPageExamples";
+---
+
+<BaseLayout
+  title="Skool About Page Copy Examples: Swipe File for Community Owners"
+  description="Real Skool community about page templates. Swipe the best copy for your own about page, group description, and welcome message."
+  canonicalUrl="https://skool.help/tools/about-page-copy"
+>
+  <div class="max-w-[1200px] mx-auto px-6 pt-16 pb-4">
+    <h1 class="text-3xl font-bold tracking-tight">
+      Skool About Page Copy: Swipe File
+    </h1>
+    <p class="text-muted-foreground mt-2 text-sm">
+      Your about page is the first thing potential members read. These real
+      examples from successful Skool communities should be your starting point.
+    </p>
+  </div>
+
+  <AboutPageExamples client:only="react" />
+</BaseLayout>

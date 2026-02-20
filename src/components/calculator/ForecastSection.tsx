@@ -19,24 +19,32 @@ export function ForecastSection({ summary }: Props) {
         <MetricCard
           label="Forecast MRR"
           value={formatCurrency(summary.forecastMrr)}
+          subtext="Month 12 revenue"
+          tooltip="Projected monthly recurring revenue at the end of month 12 based on your current inputs."
           status="neutral"
           icon={<TrendingUp className="size-4" />}
         />
         <MetricCard
           label="Total Members (M12)"
           value={formatNumber(summary.totalMembers)}
+          subtext="Paying members at M12"
+          tooltip="Total paying members you're projected to have by month 12, after accounting for acquisitions and churn."
           status="neutral"
           icon={<Users className="size-4" />}
         />
         <MetricCard
           label="Annual Run Rate"
           value={formatCurrency(summary.annualRunRate)}
+          subtext="MRR x 12"
+          tooltip="Month 12 revenue multiplied by 12. Shows your projected annual revenue if growth holds steady."
           status="neutral"
           icon={<BarChart3 className="size-4" />}
         />
         <MetricCard
           label="12-Mo Total Profit"
           value={formatCurrency(summary.totalProfit12Mo)}
+          subtext="Cumulative profit"
+          tooltip="Sum of all monthly profits (revenue minus ad spend) across all 12 months. Red means you spent more on ads than you earned."
           status={summary.totalProfit12Mo >= 0 ? 'good' : 'danger'}
           icon={<DollarSign className="size-4" />}
         />

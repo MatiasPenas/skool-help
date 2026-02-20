@@ -1,19 +1,130 @@
 ---
-const accentColors = ['text-accent-yellow', 'text-accent-purple', 'text-accent-green', 'text-accent-pink', 'text-accent-blue', 'text-accent-orange', 'text-accent-yellow', 'text-accent-purple', 'text-accent-green'];
-const brandLetters = 'SKOOL.HELP'.split('');
+import * as Constants from "@/lib/constants";
+
+const brandLetters = [
+  { char: "S", color: "#263397" },
+  { char: "k", color: "#D3513E" },
+  { char: "o", color: "#E0B467" },
+  { char: "o", color: "#6BB7EE" },
+  { char: "l", color: "#C45946" },
+  { char: ".", color: "white" },
+  { char: "H", color: "white" },
+  { char: "e", color: "white" },
+  { char: "l", color: "white" },
+  { char: "p", color: "white" },
+];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
-  <div class="max-w-[1400px] mx-auto flex items-center justify-between px-4 h-14">
-    <a href="/" class="flex items-center gap-0 text-lg font-bold tracking-tight">
-      {brandLetters.map((letter, i) => (
-        <span class={accentColors[i % accentColors.length]}>{letter}</span>
-      ))}
+<header
+  class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border"
+>
+  <div
+    class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between"
+  >
+    <a
+      href="/"
+      class="flex items-center gap-0.5 text-lg font-bold tracking-wider hover:scale-[1.02] transition-transform"
+    >
+      {brandLetters.map((item) => <span style={`color: ${item.color}`}>{item.char}</span>)}
     </a>
-    <nav class="hidden md:flex items-center gap-6">
-      <a href="/tools/ads-calculator-premium" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
-        Ads Calculator
-      </a>
+
+    <nav class="hidden md:flex items-center gap-8">
+      {
+        Constants.NAV_ITEMS.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150"
+          >
+            {item.label}
+          </a>
+        ))
+      }
     </nav>
+
+    <a
+      href="https://www.skool.com/?ref=101889e86ce44c2f8edc5db9957fe449"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hidden md:inline-block bg-[#F0CF80] text-black text-sm font-bold uppercase tracking-wide px-5 py-2 rounded-[4px] hover:bg-[#F0CF80]/90 transition-colors duration-200 shadow-none"
+    >
+      CREATE YOUR COMMUNITY
+    </a>
+
+    <button
+      id="menu-toggle"
+      class="md:hidden flex flex-col justify-center gap-1.5 w-10 h-10 -mr-2"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+    >
+      <span id="bar1" class="block w-5 h-0.5 bg-foreground transition-all duration-200 origin-center"></span>
+      <span id="bar2" class="block w-5 h-0.5 bg-foreground transition-all duration-200"></span>
+      <span id="bar3" class="block w-5 h-0.5 bg-foreground transition-all duration-200 origin-center"></span>
+    </button>
   </div>
 </header>
+
+<div
+  id="mobile-menu"
+  class="hidden fixed inset-x-0 top-16 z-40 md:hidden bg-background border-b border-border"
+>
+  <nav class="flex flex-col px-6 py-5 gap-5">
+    {
+      Constants.NAV_ITEMS.map((item) => (
+        <a
+          href={item.href}
+          class="mobile-nav-link text-base text-muted-foreground hover:text-foreground transition-colors duration-150"
+        >
+          {item.label}
+        </a>
+      ))
+    }
+    <a
+      href="https://www.skool.com/?ref=101889e86ce44c2f8edc5db9957fe449"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mobile-nav-link mt-1 inline-block bg-[#F0CF80] text-black text-sm font-bold uppercase tracking-wide px-5 py-2.5 rounded-[4px] text-center hover:bg-[#F0CF80]/90 transition-colors duration-200"
+    >
+      CREATE YOUR COMMUNITY
+    </a>
+  </nav>
+</div>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  const bar1 = document.getElementById("bar1");
+  const bar2 = document.getElementById("bar2");
+  const bar3 = document.getElementById("bar3");
+
+  let open = false;
+
+  function openMenu() {
+    open = true;
+    menu?.classList.remove("hidden");
+    toggle?.setAttribute("aria-expanded", "true");
+    bar1!.style.transform = "translateY(8px) rotate(45deg)";
+    bar2!.style.opacity = "0";
+    bar3!.style.transform = "translateY(-8px) rotate(-45deg)";
+  }
+
+  function closeMenu() {
+    open = false;
+    menu?.classList.add("hidden");
+    toggle?.setAttribute("aria-expanded", "false");
+    bar1!.style.transform = "";
+    bar2!.style.opacity = "";
+    bar3!.style.transform = "";
+  }
+
+  toggle?.addEventListener("click", () => {
+    open ? closeMenu() : openMenu();
+  });
+
+  document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 768) closeMenu();
+  });
+</script>

@@ -1,0 +1,77 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import * as Constants from "@/lib/constants";
+
+const categories = [
+  {
+    label: "Calculators",
+    tools: Constants.OUR_TOOLS.filter((t) => t.subtitle.includes("Model")),
+  },
+  {
+    label: "Templates and Examples",
+    tools: Constants.OUR_TOOLS.filter(
+      (t) => t.subtitle === "Examples" || t.subtitle === "Templates"
+    ),
+  },
+];
+---
+
+<BaseLayout
+  title="Skool Owner Tools: Ads Calculators and Swipe Files | SKOOL.HELP"
+  description="Free tools for Skool community owners: ads calculators, swipe files, and more."
+  canonicalUrl="https://skool.help/tools"
+>
+  <div class="max-w-[1200px] mx-auto px-6 py-16">
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold tracking-tight">Tools</h1>
+      <p class="text-muted-foreground mt-2 text-sm">
+        Free tools and resources to help you scale your Skool community.
+      </p>
+    </div>
+
+    {
+      categories.map(({ label, tools }) => (
+        <div class="mb-12">
+          <h2 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">
+            {label}
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {tools.map((tool) => (
+              <a
+                href={tool.href}
+                class="block rounded-xl overflow-hidden border border-border hover:bg-white/5 transition-colors duration-200 group"
+              >
+                <div class="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={tool.image}
+                    alt={tool.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-out"
+                  />
+                </div>
+                <div class="px-4 py-3 flex items-center gap-3 bg-card">
+                  <div
+                    class={`w-10 h-10 rounded-lg ${tool.bgColor} flex items-center justify-center flex-shrink-0`}
+                  >
+                    {tool.icon && (
+                      <img
+                        src={tool.icon}
+                        alt=""
+                        class="w-5 h-5 invert opacity-90"
+                      />
+                    )}
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-foreground">
+                      {tool.title}
+                    </p>
+                    <p class="text-xs text-muted-foreground">{tool.subtitle}</p>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</BaseLayout>

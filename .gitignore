@@ -3,3 +3,15 @@ dist/
 .astro/
 app/node_modules/
 .DS_Store
+
+# Environment / secrets
+.env
+.env.*
+
+# Script output (scraped data, CSVs)
+scripts/output/
+
+# Local-only files — not for publishing
+tech-spec.md
+CLAUDE.md
+research/

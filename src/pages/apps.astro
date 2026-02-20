@@ -1,0 +1,46 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import * as Constants from "@/lib/constants";
+---
+
+<BaseLayout
+  title="Best Apps for Skool Owners: Automation and Funnels | SKOOL.HELP"
+  description="Software that pairs well with Skool. This includes funnels, automation, and video tools."
+  canonicalUrl="https://skool.help/apps"
+>
+  <div class="max-w-[1200px] mx-auto px-6 py-16">
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold tracking-tight">Apps for Skool Owners</h1>
+      <p class="text-muted-foreground mt-2 text-sm">
+        Software that pairs well with Skool. Some links are affiliate links. We
+        only list tools we'd actually recommend.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      {
+        Constants.SKOOL_APPS.map((app) => (
+          <a
+            href={app.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-between p-3 rounded-lg bg-card border border-border hover:bg-white/5 transition-colors duration-200 group"
+          >
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-background flex items-center justify-center">
+                <div class={`w-5 h-5 bg-accent-${app.color} rounded-full`} />
+              </div>
+              <div>
+                <p class="text-sm font-medium text-foreground">{app.name}</p>
+                <p class="text-xs text-muted-foreground">{app.description}</p>
+              </div>
+            </div>
+            <span class="text-xs font-medium text-muted-foreground border border-border rounded px-2 py-1 group-hover:text-foreground transition-colors">
+              GET
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

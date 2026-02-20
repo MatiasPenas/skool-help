@@ -1,0 +1,21 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import WelcomeMessageExamples from "@/components/examples/WelcomeMessageExamples";
+---
+
+<BaseLayout
+  title="Skool Auto DM Templates: Welcome Message Scripts for New Members"
+  description="Copy-paste auto DM scripts for your Skool community. Welcome new members and convert free members to paid with proven message templates."
+  canonicalUrl="https://skool.help/tools/skool-auto-dm-templates"
+>
+  <div class="max-w-[1200px] mx-auto px-6 pt-16 pb-4">
+    <h1 class="text-3xl font-bold tracking-tight">Skool Auto DM Templates</h1>
+    <p class="text-muted-foreground mt-2 text-sm">
+      Your first message to a new member sets the tone for their entire
+      experience. These templates cover welcome messages, free-to-paid
+      conversion nudges, and re-engagement scripts.
+    </p>
+  </div>
+
+  <WelcomeMessageExamples client:only="react" />
+</BaseLayout>

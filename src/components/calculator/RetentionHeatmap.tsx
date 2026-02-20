@@ -2,6 +2,7 @@ import React from 'react';
 import type { CohortData } from '@/lib/calculator-engine';
 import { formatNumber } from '@/lib/calculator-engine';
 import { cn } from '@/lib/utils';
+import { InfoTooltip } from './InfoTooltip';
 
 interface Props {
   cohorts: CohortData[];
@@ -22,9 +23,10 @@ export function RetentionHeatmap({ cohorts, churnRate }: Props) {
 
   return (
     <div className="bg-card rounded-xl border p-5">
-      <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">
-        Retention Cohorts
-      </h3>
+      <div className="flex items-center gap-1.5 mb-4">
+        <h3 className="text-sm font-semibold uppercase tracking-wider">Retention Cohorts</h3>
+        <InfoTooltip text="Shows how many members from each month's cohort remain active in later months. Darker green = better retention. Each row is a cohort; columns show how they're doing over time." />
+      </div>
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
