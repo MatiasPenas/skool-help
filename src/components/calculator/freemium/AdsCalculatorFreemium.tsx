@@ -44,6 +44,9 @@ export default function AdsCalculatorFreemium() {
           churnRate={calculator.inputs.churnRate}
         />
         {/* <CtaSection /> */}
+        <p className="text-xs text-muted-foreground pb-2">
+          Note: The projections assume fixed unit economics (constant CAC, churn rate, and price). In reality, growth follows an S-curve: CAC increases as ad audiences saturate, addressable markets are finite, and at scale, churn losses approach acquisition volume. The model is most accurate in the early months before these forces take effect.
+        </p>
       </main>
     </div>
     </div>
