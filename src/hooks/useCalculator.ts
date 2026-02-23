@@ -13,7 +13,7 @@ const DEFAULT_INPUTS: CalculatorInputs = {
   churnRate: 0.20,
   initialBudget: 1000,
   reinvestmentPct: 1.0,
-  cacGrowthRate: 0,
+  cacGrowthRate: 0.05,
 };
 
 export function useCalculator(initialInputs?: Partial<CalculatorInputs>) {

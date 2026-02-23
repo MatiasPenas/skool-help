@@ -84,58 +84,46 @@ export function InputPanel({ inputs, onChange, onPreset }: InputPanelProps) {
         </div>
 
         <div className="space-y-4">
-          <div>
-            <NumberInput
-              label="Monthly Price"
-              prefix="$"
-              value={inputs.monthlyPrice}
-              onChange={(v) => handleChange('monthlyPrice', v)}
-              min={1}
-              max={10000}
-              tooltip="The monthly subscription price members pay to join your Skool community."
-            />
-            <p className="text-[10px] text-muted-foreground/60 mt-1">Skool communities: $27–$997/mo</p>
-          </div>
+          <NumberInput
+            label="Monthly Price"
+            prefix="$"
+            value={inputs.monthlyPrice}
+            onChange={(v) => handleChange('monthlyPrice', v)}
+            min={1}
+            max={10000}
+            tooltip="The monthly subscription price members pay to join your Skool community."
+          />
 
-          <div>
-            <NumberInput
-              label="CAC (Acquisition Cost)"
-              prefix="$"
-              value={inputs.cac}
-              onChange={(v) => handleChange('cac', v)}
-              min={1}
-              max={50000}
-              tooltip="How much you spend on ads to acquire one new paying member. Includes all ad costs divided by conversions."
-            />
-            <p className="text-[10px] text-muted-foreground/60 mt-1">Meta ads for Skool: $80–$150 typical</p>
-          </div>
+          <NumberInput
+            label="CAC (Acquisition Cost)"
+            prefix="$"
+            value={inputs.cac}
+            onChange={(v) => handleChange('cac', v)}
+            min={1}
+            max={50000}
+            tooltip="How much you spend on ads to acquire one new paying member. Includes all ad costs divided by conversions."
+          />
 
-          <div>
-            <NumberInput
-              label="Churn Rate"
-              suffix="%"
-              value={Math.round(inputs.churnRate * 100)}
-              onChange={(v) => handleChange('churnRate', v / 100)}
-              min={1}
-              max={100}
-              tooltip="The percentage of your paying members who cancel each month. 10% means 1 in 10 members leave monthly."
-            />
-            <p className="text-[10px] text-muted-foreground/60 mt-1">Healthy Skool community: 5–15%/mo</p>
-          </div>
+          <NumberInput
+            label="Churn Rate"
+            suffix="%"
+            value={Math.round(inputs.churnRate * 100)}
+            onChange={(v) => handleChange('churnRate', v / 100)}
+            min={1}
+            max={100}
+            tooltip="The percentage of your paying members who cancel each month. 10% means 1 in 10 members leave monthly."
+          />
 
-          <div>
-            <NumberInput
-              label="Initial Budget"
-              prefix="$"
-              value={inputs.initialBudget}
-              onChange={(v) => handleChange('initialBudget', v)}
-              min={0}
-              max={1000000}
-              step={100}
-              tooltip="Your ad spend budget for month 1. After that, ad spend is calculated from revenue and your reinvestment %."
-            />
-            <p className="text-[10px] text-muted-foreground/60 mt-1">Start small to validate, then scale</p>
-          </div>
+          <NumberInput
+            label="Initial Budget"
+            prefix="$"
+            value={inputs.initialBudget}
+            onChange={(v) => handleChange('initialBudget', v)}
+            min={0}
+            max={1000000}
+            step={100}
+            tooltip="Your ad spend budget for month 1. After that, ad spend is calculated from revenue and your reinvestment %."
+          />
 
           <Separator className="my-2" />
 
