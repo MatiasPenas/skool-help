@@ -175,7 +175,7 @@ export const SKOOL_COMMUNITIES = [
     },
     {
         name: "Community Builders",
-        description: "A place where coaches, teachers, and community builders come to make $5,000+/month",
+        description: "Want to make $5,000/month online ASAP as a coach?",
         image: "https://assets.skool.com/f/b35f5a9d7df8458a96e9b0b9975f965a/ffe106905da5446a95e130ed523d79741bb3aca8af594407811ae779891084be",
         href: "https://www.skool.com/communitybuilders/about?ref=101889e86ce44c2f8edc5db9957fe449",
     },
