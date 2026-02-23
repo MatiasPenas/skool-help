@@ -52,7 +52,7 @@ function CopyButton({ text, communityName }: { text: string; communityName: stri
 
 function ExampleCard({ example }: { example: CommunityExample }) {
   return (
-    <Card className="border-border/50 bg-card overflow-hidden py-0 gap-0">
+    <Card className="border-border/50 bg-card overflow-hidden py-0 gap-0 flex flex-col">
       {/* Header */}
       <div className="flex items-center gap-3 px-5 py-4 border-b border-border/50">
         {example.avatarUrl ? (
@@ -92,8 +92,8 @@ function ExampleCard({ example }: { example: CommunityExample }) {
       </div>
 
       {/* Copy content */}
-      <div className="px-5 py-4">
-        <div className="text-sm text-foreground/90 leading-relaxed whitespace-pre-line">
+      <div className="px-5 py-4 bg-white flex-1">
+        <div className="text-sm text-gray-800 leading-relaxed whitespace-pre-line">
           {example.copy}
         </div>
       </div>
