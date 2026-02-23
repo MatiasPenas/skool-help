@@ -61,7 +61,7 @@ export const EMAIL_TEMPLATES = [
         title: "Grow With Evelyn",
         subtitle: "Create, launch & sell your membership.",
         avatar: "/icons/skool-logo.png",
-        href: "https://www.skool.com/evelyn/about",
+        href: "https://www.skool.com/evelyn/about?ref=101889e86ce44c2f8edc5db9957fe449",
     },
 ];
 
@@ -147,7 +147,7 @@ export const SKOOL_COMMUNITIES = [
         name: "Grow With Evelyn",
         description: "Create, launch & sell your membership.",
         image: "https://assets.skool.com/f/8677cd8cff1f4f68b4e48876e5ced1f6/a0c4fa8b996247fd8a6267c847de9b0c034e7368215045399dc4d5c1ae80b48a.jpg",
-        href: "https://www.skool.com/evelyn/about",
+        href: "https://www.skool.com/evelyn/about?ref=101889e86ce44c2f8edc5db9957fe449",
     },
     {
         name: "GOOSIFY 🍓🐛🦋🌈⭐️🩷",

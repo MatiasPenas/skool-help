@@ -9,7 +9,7 @@ import { AcquisitionChurnChart } from './AcquisitionChurnChart';
 import { CumulativeProfitChart } from './CumulativeProfitChart';
 import { FinancialTable } from './FinancialTable';
 import { RetentionHeatmap } from './RetentionHeatmap';
-import { CtaSection } from './CtaSection';
+// import { CtaSection } from './CtaSection';
 import { ChevronLeft } from 'lucide-react';
 
 export default function AdsCalculator() {
@@ -19,10 +19,10 @@ export default function AdsCalculator() {
 
   return (
     <div className="max-w-[1400px] mx-auto px-4 pt-6">
-      <a href="/tools" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
+      {/* <a href="/tools" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
         <ChevronLeft className="w-4 h-4" />
         Tools
-      </a>
+      </a> */}
     <div className="flex flex-col lg:flex-row gap-6 pb-8">
       {/* Left sidebar - sticky on desktop */}
       <aside className="lg:w-[320px] lg:flex-shrink-0 lg:sticky lg:top-20 lg:self-start">
@@ -50,7 +50,7 @@ export default function AdsCalculator() {
           cohorts={calculator.cohorts}
           churnRate={calculator.inputs.churnRate}
         />
-        <CtaSection />
+        {/* <CtaSection /> */}
       </main>
     </div>
     </div>

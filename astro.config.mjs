@@ -9,6 +9,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://skool.help',
   output: 'static',
+  devToolbar: { enabled: false },
   integrations: [
     react(),
     tailwind(),

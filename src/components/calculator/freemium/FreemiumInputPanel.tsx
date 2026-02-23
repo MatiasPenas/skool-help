@@ -46,11 +46,48 @@ export function FreemiumInputPanel({ inputs, onChange, onPreset }: Props) {
     ? inputs.cac / inputs.conversionRate
     : 0;
 
+  const handleChange = <K extends keyof FreemiumInputs>(key: K, value: FreemiumInputs[K]) => {
+    window.posthog?.capture('freemium_calculator_used', {
+      calculator_type: 'freemium',
+      changed_field: key,
+      [key]: value,
+      monthly_price: inputs.monthlyPrice,
+      cac: inputs.cac,
+      conversion_rate: inputs.conversionRate,
+      churn_rate: inputs.churnRate,
+      initial_budget: inputs.initialBudget,
+      reinvestment_pct: inputs.reinvestmentPct,
+    });
+    onChange(key, value);
+  };
+
+  const handlePreset = (key: string, newInputs: FreemiumInputs) => {
+    window.posthog?.capture('freemium_calculator_used', {
+      calculator_type: 'freemium',
+      changed_field: 'scenario_preset',
+      scenario: key,
+      monthly_price: newInputs.monthlyPrice,
+      cac: newInputs.cac,
+      conversion_rate: newInputs.conversionRate,
+      churn_rate: newInputs.churnRate,
+      initial_budget: newInputs.initialBudget,
+      reinvestment_pct: newInputs.reinvestmentPct,
+    });
+    onPreset(newInputs);
+  };
+
   const handleShare = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+      window.posthog?.capture('freemium_calculator_shared', {
+        calculator_type: 'freemium',
+        monthly_price: inputs.monthlyPrice,
+        cac: inputs.cac,
+        conversion_rate: inputs.conversionRate,
+        churn_rate: inputs.churnRate,
+      });
     } catch {
       // fallback
     }
@@ -72,7 +109,7 @@ export function FreemiumInputPanel({ inputs, onChange, onPreset }: Props) {
           {(Object.keys(SCENARIO_PROFILES) as Array<keyof typeof SCENARIO_PROFILES>).map((key) => (
             <button
               key={key}
-              onClick={() => onPreset(applyScenario(key, inputs))}
+              onClick={() => handlePreset(key, applyScenario(key, inputs))}
               className={[
                 'flex-1 rounded-md px-2 py-1 text-[10px] font-medium uppercase tracking-wider transition-colors',
                 activeScenario === key
@@ -90,7 +127,7 @@ export function FreemiumInputPanel({ inputs, onChange, onPreset }: Props) {
             label="Monthly Price"
             prefix="$"
             value={inputs.monthlyPrice}
-            onChange={(v) => onChange('monthlyPrice', v)}
+            onChange={(v) => handleChange('monthlyPrice', v)}
             min={1}
             max={10000}
             tooltip="The monthly subscription price for your premium paid tier."
@@ -100,7 +137,7 @@ export function FreemiumInputPanel({ inputs, onChange, onPreset }: Props) {
             label="Free Member CPA"
             prefix="$"
             value={inputs.cac}
-            onChange={(v) => onChange('cac', v)}
+            onChange={(v) => handleChange('cac', v)}
             min={0.5}
             max={100}
             step={0.5}
@@ -111,7 +148,7 @@ export function FreemiumInputPanel({ inputs, onChange, onPreset }: Props) {
             label="Free → Paid Conversion"
             suffix="%"
             value={Math.round(inputs.conversionRate * 100)}
-            onChange={(v) => onChange('conversionRate', v / 100)}
+            onChange={(v) => handleChange('conversionRate', v / 100)}
             min={1}
             max={50}
             tooltip="Percentage of free members who upgrade to your paid tier each month. 3-5% is good, 5-8% is great."
@@ -129,7 +166,7 @@ export function FreemiumInputPanel({ inputs, onChange, onPreset }: Props) {
             label="Churn Rate"
             suffix="%"
             value={Math.round(inputs.churnRate * 100)}
-            onChange={(v) => onChange('churnRate', v / 100)}
+            onChange={(v) => handleChange('churnRate', v / 100)}
             min={1}
             max={100}
             tooltip="The percentage of premium paying members who cancel each month. 10% means 1 in 10 members leave monthly."
@@ -139,7 +176,7 @@ export function FreemiumInputPanel({ inputs, onChange, onPreset }: Props) {
             label="Initial Budget"
             prefix="$"
             value={inputs.initialBudget}
-            onChange={(v) => onChange('initialBudget', v)}
+            onChange={(v) => handleChange('initialBudget', v)}
             min={0}
             max={1000000}
             step={100}
@@ -159,7 +196,7 @@ export function FreemiumInputPanel({ inputs, onChange, onPreset }: Props) {
             </div>
             <Slider
               value={[inputs.reinvestmentPct * 100]}
-              onValueChange={([v]) => onChange('reinvestmentPct', v / 100)}
+              onValueChange={([v]) => handleChange('reinvestmentPct', v / 100)}
               min={0}
               max={100}
               step={1}

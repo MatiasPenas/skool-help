@@ -14,13 +14,18 @@ interface CommunityExample {
 
 const EXAMPLES: CommunityExample[] = examplesData;
 
-function CopyButton({ text }: { text: string }) {
+function CopyButton({ text, communityName }: { text: string; communityName: string }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    window.posthog?.capture('swipe_file_copied', {
+      swipe_file_type: 'about_page_copy',
+      community_name: communityName,
+      text_length: text.length,
+    });
   };
 
   return (
@@ -72,7 +77,7 @@ function ExampleCard({ example }: { example: CommunityExample }) {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <CopyButton text={example.copy} />
+          <CopyButton text={example.copy} communityName={example.communityName} />
           {example.skoolUrl !== '#' && (
             <a
               href={example.skoolUrl}

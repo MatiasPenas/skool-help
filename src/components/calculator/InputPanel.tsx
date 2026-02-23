@@ -49,11 +49,45 @@ export function InputPanel({ inputs, onChange, onPreset }: InputPanelProps) {
   const [copied, setCopied] = useState(false);
   const activeScenario = detectActiveScenario(inputs);
 
+  const handleChange = <K extends keyof CalculatorInputs>(key: K, value: CalculatorInputs[K]) => {
+    window.posthog?.capture('calculator_used', {
+      calculator_type: 'premium',
+      changed_field: key,
+      [key]: value,
+      monthly_price: inputs.monthlyPrice,
+      cac: inputs.cac,
+      churn_rate: inputs.churnRate,
+      initial_budget: inputs.initialBudget,
+      reinvestment_pct: inputs.reinvestmentPct,
+    });
+    onChange(key, value);
+  };
+
+  const handlePreset = (key: string, newInputs: CalculatorInputs) => {
+    window.posthog?.capture('calculator_used', {
+      calculator_type: 'premium',
+      changed_field: 'scenario_preset',
+      scenario: key,
+      monthly_price: newInputs.monthlyPrice,
+      cac: newInputs.cac,
+      churn_rate: newInputs.churnRate,
+      initial_budget: newInputs.initialBudget,
+      reinvestment_pct: newInputs.reinvestmentPct,
+    });
+    onPreset(newInputs);
+  };
+
   const handleShare = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+      window.posthog?.capture('calculator_shared', {
+        calculator_type: 'premium',
+        monthly_price: inputs.monthlyPrice,
+        cac: inputs.cac,
+        churn_rate: inputs.churnRate,
+      });
     } catch {
       // fallback
     }
@@ -75,7 +109,7 @@ export function InputPanel({ inputs, onChange, onPreset }: InputPanelProps) {
           {(Object.keys(SCENARIO_PROFILES) as Array<keyof typeof SCENARIO_PROFILES>).map((key) => (
             <button
               key={key}
-              onClick={() => onPreset(applyScenario(key, inputs))}
+              onClick={() => handlePreset(key, applyScenario(key, inputs))}
               className={[
                 'flex-1 rounded-md px-2 py-1 text-[10px] font-medium uppercase tracking-wider transition-colors',
                 activeScenario === key
@@ -94,7 +128,7 @@ export function InputPanel({ inputs, onChange, onPreset }: InputPanelProps) {
               label="Monthly Price"
               prefix="$"
               value={inputs.monthlyPrice}
-              onChange={(v) => onChange('monthlyPrice', v)}
+              onChange={(v) => handleChange('monthlyPrice', v)}
               min={1}
               max={10000}
               tooltip="The monthly subscription price members pay to join your Skool community."
@@ -107,7 +141,7 @@ export function InputPanel({ inputs, onChange, onPreset }: InputPanelProps) {
               label="CAC (Acquisition Cost)"
               prefix="$"
               value={inputs.cac}
-              onChange={(v) => onChange('cac', v)}
+              onChange={(v) => handleChange('cac', v)}
               min={1}
               max={50000}
               tooltip="How much you spend on ads to acquire one new paying member. Includes all ad costs divided by conversions."
@@ -120,7 +154,7 @@ export function InputPanel({ inputs, onChange, onPreset }: InputPanelProps) {
               label="Churn Rate"
               suffix="%"
               value={Math.round(inputs.churnRate * 100)}
-              onChange={(v) => onChange('churnRate', v / 100)}
+              onChange={(v) => handleChange('churnRate', v / 100)}
               min={1}
               max={100}
               tooltip="The percentage of your paying members who cancel each month. 10% means 1 in 10 members leave monthly."
@@ -133,7 +167,7 @@ export function InputPanel({ inputs, onChange, onPreset }: InputPanelProps) {
               label="Initial Budget"
               prefix="$"
               value={inputs.initialBudget}
-              onChange={(v) => onChange('initialBudget', v)}
+              onChange={(v) => handleChange('initialBudget', v)}
               min={0}
               max={1000000}
               step={100}
@@ -155,7 +189,7 @@ export function InputPanel({ inputs, onChange, onPreset }: InputPanelProps) {
             </div>
             <Slider
               value={[inputs.reinvestmentPct * 100]}
-              onValueChange={([v]) => onChange('reinvestmentPct', v / 100)}
+              onValueChange={([v]) => handleChange('reinvestmentPct', v / 100)}
               min={0}
               max={100}
               step={1}

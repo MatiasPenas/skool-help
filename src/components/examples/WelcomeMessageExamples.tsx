@@ -47,13 +47,19 @@ function highlightPlaceholders(text: string) {
   });
 }
 
-function CopyButton({ text }: { text: string }) {
+function CopyButton({ text, category, length }: { text: string; category: string; length: string }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    window.posthog?.capture('swipe_file_copied', {
+      swipe_file_type: 'dm_template',
+      template_category: category,
+      template_length: length,
+      text_length: text.length,
+    });
   };
 
   return (
@@ -110,7 +116,7 @@ function MessageCard({ msg }: { msg: WelcomeMessage }) {
 
       {/* Footer */}
       <div className="px-5 py-3 border-t border-border/50 flex justify-end">
-        <CopyButton text={msg.message} />
+        <CopyButton text={msg.message} category={msg.category} length={msg.length} />
       </div>
     </Card>
   );
@@ -205,7 +211,13 @@ export default function WelcomeMessageExamples() {
         <FilterPills
           options={CATEGORIES}
           active={activeCategory}
-          onChange={(v) => { setActiveCategory(v); setActiveLength('All'); }}
+          onChange={(v) => {
+            setActiveCategory(v);
+            setActiveLength('All');
+            if (v !== 'All') {
+              window.posthog?.capture('dm_template_filter_changed', { filter_type: 'category', filter_value: v });
+            }
+          }}
           counts={categoryCounts}
         />
       </div>
@@ -215,7 +227,12 @@ export default function WelcomeMessageExamples() {
         <FilterPills
           options={LENGTHS}
           active={activeLength}
-          onChange={setActiveLength}
+          onChange={(v) => {
+            setActiveLength(v);
+            if (v !== 'All') {
+              window.posthog?.capture('dm_template_filter_changed', { filter_type: 'length', filter_value: v, active_category: activeCategory });
+            }
+          }}
           counts={lengthCounts}
         />
       </div>

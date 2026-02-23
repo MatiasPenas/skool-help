@@ -28,6 +28,9 @@ import * as Constants from "@/lib/constants";
             target="_blank"
             rel="noopener noreferrer"
             class="flex items-center gap-4 p-4 rounded-xl border border-border bg-card hover:bg-white/10 transition-colors duration-200 group"
+            data-community-name={community.name}
+            data-community-href={community.href}
+            onclick="window.posthog?.capture('community_link_clicked', { community_name: this.dataset.communityName, destination_url: this.dataset.communityHref, source: 'communities_page' })"
           >
             <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
               <img

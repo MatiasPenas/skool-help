@@ -17,13 +17,19 @@ interface AdExample {
 
 const ADS: AdExample[] = adsData as AdExample[];
 
-function CopyButton({ text }: { text: string }) {
+function CopyButton({ text, advertiserName, platform }: { text: string; advertiserName: string; platform: string }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    window.posthog?.capture('swipe_file_copied', {
+      swipe_file_type: 'meta_ad',
+      platform,
+      advertiser_name: advertiserName,
+      text_length: text.length,
+    });
   };
 
   return (
@@ -110,7 +116,7 @@ function AdCard({ ad }: { ad: AdExample }) {
             </span>
           </div>
         </div>
-        <CopyButton text={ad.primaryText} />
+        <CopyButton text={ad.primaryText} advertiserName={ad.advertiserName} platform={ad.platform} />
       </div>
     </Card>
   );
