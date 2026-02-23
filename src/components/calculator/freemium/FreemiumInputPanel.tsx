@@ -7,29 +7,17 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Label } from '@/components/ui/label';
-import { Share2, ArrowRight } from 'lucide-react';
+import { Share2, ArrowRight, ChevronDown } from 'lucide-react';
 
-const SCENARIO_PROFILES: Record<string, { cac: number; conversionRate: number; churnRate: number; reinvestmentPct: number }> = {
-  conservative: { cac: 8,  conversionRate: 0.03, churnRate: 0.20, reinvestmentPct: 0.30 },
-  realistic:    { cac: 5,  conversionRate: 0.05, churnRate: 0.12, reinvestmentPct: 1.0  },
-  'the dream':  { cac: 2,  conversionRate: 0.08, churnRate: 0.05, reinvestmentPct: 1.0  },
-};
+const SATURATION_PRESETS: { label: string; cacGrowthRate: number }[] = [
+  { label: 'Ideal',       cacGrowthRate: 0    },
+  { label: 'Typical',     cacGrowthRate: 0.05 },
+  { label: 'Competitive', cacGrowthRate: 0.10 },
+];
 
-function applyScenario(key: string, current: FreemiumInputs): FreemiumInputs {
-  const p = SCENARIO_PROFILES[key];
-  return { ...current, cac: p.cac, conversionRate: p.conversionRate, churnRate: p.churnRate, reinvestmentPct: p.reinvestmentPct };
-}
-
-function detectActiveScenario(inputs: FreemiumInputs): string | null {
-  for (const [key, p] of Object.entries(SCENARIO_PROFILES)) {
-    if (
-      inputs.cac === p.cac &&
-      inputs.conversionRate === p.conversionRate &&
-      inputs.churnRate === p.churnRate &&
-      inputs.reinvestmentPct === p.reinvestmentPct
-    ) return key;
-  }
-  return null;
+function detectActiveSaturationPreset(cacGrowthRate: number): number | null {
+  const idx = SATURATION_PRESETS.findIndex((p) => p.cacGrowthRate === cacGrowthRate);
+  return idx >= 0 ? idx : null;
 }
 
 interface Props {
@@ -40,7 +28,9 @@ interface Props {
 
 export function FreemiumInputPanel({ inputs, onChange, onPreset }: Props) {
   const [copied, setCopied] = useState(false);
-  const activeScenario = detectActiveScenario(inputs);
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+  const cacGrowthRate = inputs.cacGrowthRate ?? 0;
+  const activePresetIdx = detectActiveSaturationPreset(cacGrowthRate);
 
   const effectiveCAC = inputs.conversionRate > 0
     ? inputs.cac / inputs.conversionRate
@@ -57,23 +47,19 @@ export function FreemiumInputPanel({ inputs, onChange, onPreset }: Props) {
       churn_rate: inputs.churnRate,
       initial_budget: inputs.initialBudget,
       reinvestment_pct: inputs.reinvestmentPct,
+      cac_growth_rate: inputs.cacGrowthRate ?? 0,
     });
     onChange(key, value);
   };
 
-  const handlePreset = (key: string, newInputs: FreemiumInputs) => {
+  const handleSaturationPreset = (preset: typeof SATURATION_PRESETS[0]) => {
     window.posthog?.capture('freemium_calculator_used', {
       calculator_type: 'freemium',
-      changed_field: 'scenario_preset',
-      scenario: key,
-      monthly_price: newInputs.monthlyPrice,
-      cac: newInputs.cac,
-      conversion_rate: newInputs.conversionRate,
-      churn_rate: newInputs.churnRate,
-      initial_budget: newInputs.initialBudget,
-      reinvestment_pct: newInputs.reinvestmentPct,
+      changed_field: 'cac_growth_rate',
+      cac_growth_rate: preset.cacGrowthRate,
+      preset_label: preset.label,
     });
-    onPreset(newInputs);
+    onPreset({ ...inputs, cacGrowthRate: preset.cacGrowthRate });
   };
 
   const handleShare = async () => {
@@ -102,24 +88,6 @@ export function FreemiumInputPanel({ inputs, onChange, onPreset }: Props) {
             <p className="text-xs text-muted-foreground mt-0.5">Freemium Skool Community</p>
           </div>
           <Badge className="bg-accent-green text-white border-accent-green">Freemium</Badge>
-        </div>
-
-        {/* Scenario Presets */}
-        <div className="flex gap-1.5 mb-4">
-          {(Object.keys(SCENARIO_PROFILES) as Array<keyof typeof SCENARIO_PROFILES>).map((key) => (
-            <button
-              key={key}
-              onClick={() => handlePreset(key, applyScenario(key, inputs))}
-              className={[
-                'flex-1 rounded-md px-2 py-1 text-[10px] font-medium uppercase tracking-wider transition-colors',
-                activeScenario === key
-                  ? 'bg-accent-green/20 text-accent-green border border-accent-green/40'
-                  : 'bg-muted text-muted-foreground border border-transparent hover:bg-muted/80',
-              ].join(' ')}
-            >
-              {key}
-            </button>
-          ))}
         </div>
 
         <div className="space-y-4">
@@ -185,27 +153,75 @@ export function FreemiumInputPanel({ inputs, onChange, onPreset }: Props) {
 
           <Separator className="my-2" />
 
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Reinvestment
-              </Label>
-              <Badge variant="outline" className="text-xs font-mono">
-                {Math.round(inputs.reinvestmentPct * 100)}%
-              </Badge>
+          <button
+            onClick={() => setAdvancedOpen((o) => !o)}
+            className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors w-full"
+          >
+            <ChevronDown className={`size-3 transition-transform ${advancedOpen ? 'rotate-180' : ''}`} />
+            Advanced
+          </button>
+
+          {advancedOpen && (
+            <div className="space-y-4 pt-1">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Reinvestment
+                  </Label>
+                  <span className="text-xs font-mono text-muted-foreground">{Math.round(inputs.reinvestmentPct * 100)}%</span>
+                </div>
+                <p className="text-[10px] text-muted-foreground/70 leading-relaxed">
+                  What percentage of monthly revenue goes back into ads. 100% maximizes growth; lower values take more profit out.
+                </p>
+                <Slider
+                  value={[inputs.reinvestmentPct * 100]}
+                  onValueChange={([v]) => handleChange('reinvestmentPct', v / 100)}
+                  min={0}
+                  max={100}
+                  step={1}
+                />
+                <div className="flex justify-between text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
+                  <span>Profit</span>
+                  <span>Growth</span>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="space-y-2">
+                <Label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  Audience Saturation
+                </Label>
+                <p className="text-[10px] text-muted-foreground/70 leading-relaxed">
+                  Real ad campaigns get more expensive over time. As you exhaust your warmest free-member audiences, your CPA rises. Leave at 0% for the optimistic baseline.
+                </p>
+                <div className="flex gap-1.5">
+                  {SATURATION_PRESETS.map((preset, idx) => (
+                    <button
+                      key={preset.label}
+                      onClick={() => handleSaturationPreset(preset)}
+                      className={[
+                        'flex-1 rounded-md px-2 py-1 text-[10px] font-medium uppercase tracking-wider transition-colors',
+                        activePresetIdx === idx
+                          ? 'bg-accent-green/20 text-accent-green border border-accent-green/40'
+                          : 'bg-muted text-muted-foreground border border-transparent hover:bg-muted/80',
+                      ].join(' ')}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
+                <NumberInput
+                  suffix="%/mo"
+                  value={parseFloat((cacGrowthRate * 100).toFixed(1))}
+                  onChange={(v) => handleChange('cacGrowthRate', v / 100)}
+                  min={0}
+                  max={20}
+                  step={0.5}
+                />
+              </div>
             </div>
-            <Slider
-              value={[inputs.reinvestmentPct * 100]}
-              onValueChange={([v]) => handleChange('reinvestmentPct', v / 100)}
-              min={0}
-              max={100}
-              step={1}
-            />
-            <div className="flex justify-between text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-              <span>Profit</span>
-              <span>Growth</span>
-            </div>
-          </div>
+          )}
         </div>
       </div>
 

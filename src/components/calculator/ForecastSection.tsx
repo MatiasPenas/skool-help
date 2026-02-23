@@ -25,7 +25,7 @@ export function ForecastSection({ summary }: Props) {
           icon={<TrendingUp className="size-4" />}
         />
         <MetricCard
-          label="Total Members (M12)"
+          label="Total Members"
           value={formatNumber(summary.totalMembers)}
           subtext="Paying members at M12"
           tooltip="Total paying members you're projected to have by month 12, after accounting for acquisitions and churn."

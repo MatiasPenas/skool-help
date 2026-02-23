@@ -14,6 +14,7 @@ const DEFAULT_INPUTS: FreemiumInputs = {
   churnRate: 0.10,
   initialBudget: 1000,
   reinvestmentPct: 1.0,
+  cacGrowthRate: 0,
 };
 
 export function useFreemiumCalculator(initialInputs?: Partial<FreemiumInputs>) {

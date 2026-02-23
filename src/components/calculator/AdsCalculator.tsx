@@ -45,14 +45,17 @@ export default function AdsCalculator() {
           data={calculator.monthlyData}
           breakEvenMonth={calculator.breakEvenMonth}
         />
-        <FinancialTable data={calculator.monthlyData} />
+        <FinancialTable
+          data={calculator.monthlyData}
+          showEffectiveCac={(calculator.inputs.cacGrowthRate ?? 0) > 0}
+        />
         <RetentionHeatmap
           cohorts={calculator.cohorts}
           churnRate={calculator.inputs.churnRate}
         />
         {/* <CtaSection /> */}
         <p className="text-xs text-muted-foreground pb-2">
-          Note: The projections assume fixed unit economics (constant CAC, churn rate, and price). In reality, growth follows an S-curve: CAC increases as ad audiences saturate, addressable markets are finite, and at scale, churn losses approach acquisition volume. The model is most accurate in the early months before these forces take effect.
+          Note: These projections model CAC compounding when Audience Saturation is above 0%. Other factors — finite addressable market size, churn eventually matching acquisition at scale — are not modeled. The numbers are most reliable in the early months.
         </p>
       </main>
     </div>

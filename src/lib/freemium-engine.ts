@@ -7,6 +7,7 @@ export interface FreemiumInputs {
   churnRate: number;      // monthly churn for premium members (decimal)
   initialBudget: number;
   reinvestmentPct: number;
+  cacGrowthRate?: number; // monthly % CPA increase, decimal: 0.05 = 5%/mo (default 0)
 }
 
 export interface FreemiumMonthData {
@@ -27,6 +28,7 @@ export interface FreemiumMonthData {
   profit: number;
   cumulativeProfit: number;
   marginPct: number;
+  effectiveCac: number;     // actual CPA used this month
 }
 
 export function computeFreemiumUnitEconomics(inputs: FreemiumInputs): UnitEconomics {
@@ -44,6 +46,7 @@ export function computeFreemiumMonthlyForecast(
   months: number = 12
 ): FreemiumMonthData[] {
   const { monthlyPrice, cac, conversionRate, churnRate, initialBudget, reinvestmentPct } = inputs;
+  const cacGrowthRate = inputs.cacGrowthRate ?? 0;
   const data: FreemiumMonthData[] = [];
   let totalFreeMembers = 0;
   let totalPremiumMembers = 0;
@@ -59,10 +62,11 @@ export function computeFreemiumMonthlyForecast(
       adSpend = data[m - 2].revenue * reinvestmentPct;
     }
 
-    // 2. Acquire free members
+    // 2. Apply CPA growth (audience saturation) and acquire free members
+    const effectiveCac = cac * Math.pow(1 + cacGrowthRate, m - 1);
     const totalBudget = adSpend + budgetRemainder;
-    const newFreeMembers = cac > 0 ? Math.floor(totalBudget / cac) : 0;
-    budgetRemainder = cac > 0 ? totalBudget - newFreeMembers * cac : 0;
+    const newFreeMembers = effectiveCac > 0 ? Math.floor(totalBudget / effectiveCac) : 0;
+    budgetRemainder = effectiveCac > 0 ? totalBudget - newFreeMembers * effectiveCac : 0;
 
     // 3. Add new free members to pool
     totalFreeMembers += newFreeMembers;
@@ -96,6 +100,7 @@ export function computeFreemiumMonthlyForecast(
       profit,
       cumulativeProfit,
       marginPct,
+      effectiveCac,
     });
   }
   return data;

@@ -4,6 +4,7 @@ export interface CalculatorInputs {
   churnRate: number; // decimal: 0.10 = 10%
   initialBudget: number;
   reinvestmentPct: number; // decimal: 0.0 to 1.0
+  cacGrowthRate?: number; // monthly % CAC increase, decimal: 0.05 = 5%/mo (default 0)
 }
 
 export interface UnitEconomics {
@@ -23,6 +24,7 @@ export interface MonthData {
   profit: number;
   cumulativeProfit: number;
   marginPct: number;
+  effectiveCac: number; // actual CAC used this month
 }
 
 export interface CohortData {
@@ -52,6 +54,7 @@ export function computeMonthlyForecast(
   months: number = 12
 ): MonthData[] {
   const { monthlyPrice, cac, churnRate, initialBudget, reinvestmentPct } = inputs;
+  const cacGrowthRate = inputs.cacGrowthRate ?? 0;
   const data: MonthData[] = [];
   let totalMembers = 0;
   let cumulativeProfit = 0;
@@ -67,10 +70,13 @@ export function computeMonthlyForecast(
       adSpend = prevRevenue * reinvestmentPct;
     }
 
+    // Apply CAC growth (audience saturation)
+    const effectiveCac = cac * Math.pow(1 + cacGrowthRate, m - 1);
+
     // Acquire new members (with fractional carry)
     const totalBudget = adSpend + budgetRemainder;
-    const newMembers = cac > 0 ? Math.floor(totalBudget / cac) : 0;
-    budgetRemainder = cac > 0 ? totalBudget - newMembers * cac : 0;
+    const newMembers = effectiveCac > 0 ? Math.floor(totalBudget / effectiveCac) : 0;
+    budgetRemainder = effectiveCac > 0 ? totalBudget - newMembers * effectiveCac : 0;
 
     // Churn existing members before adding new ones
     const churnedMembers = Math.round(totalMembers * churnRate);
@@ -91,6 +97,7 @@ export function computeMonthlyForecast(
       profit,
       cumulativeProfit,
       marginPct,
+      effectiveCac,
     });
   }
   return data;

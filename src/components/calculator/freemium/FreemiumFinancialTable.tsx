@@ -16,15 +16,18 @@ import { InfoTooltip } from '../InfoTooltip';
 
 interface Props {
   data: FreemiumMonthData[];
+  showEffectiveCac?: boolean;
 }
 
-function exportCsv(data: FreemiumMonthData[]) {
-  const header = 'Month,Revenue,Ad Spend,Profit,Margin %,Free Members,Converted,Premium Members\n';
+function exportCsv(data: FreemiumMonthData[], showEffectiveCac: boolean) {
+  const header = showEffectiveCac
+    ? 'Month,Revenue,Ad Spend,Profit,Margin %,Free Members,Converted,Premium Members,Eff. CPA\n'
+    : 'Month,Revenue,Ad Spend,Profit,Margin %,Free Members,Converted,Premium Members\n';
   const rows = data
-    .map(
-      (d) =>
-        `M${d.month},$${d.revenue.toFixed(0)},$${d.adSpend.toFixed(0)},$${d.profit.toFixed(0)},${d.marginPct.toFixed(1)}%,${d.totalFreeMembers},${d.converted},${d.totalPremiumMembers}`
-    )
+    .map((d) => {
+      const base = `M${d.month},$${d.revenue.toFixed(0)},$${d.adSpend.toFixed(0)},$${d.profit.toFixed(0)},${d.marginPct.toFixed(1)}%,${d.totalFreeMembers},${d.converted},${d.totalPremiumMembers}`;
+      return showEffectiveCac ? `${base},$${d.effectiveCac.toFixed(2)}` : base;
+    })
     .join('\n');
   const blob = new Blob([header + rows], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
@@ -35,7 +38,7 @@ function exportCsv(data: FreemiumMonthData[]) {
   URL.revokeObjectURL(url);
 }
 
-export function FreemiumFinancialTable({ data }: Props) {
+export function FreemiumFinancialTable({ data, showEffectiveCac = false }: Props) {
   return (
     <div className="bg-card rounded-xl border p-5">
       <div className="flex items-center justify-between mb-4">
@@ -43,7 +46,7 @@ export function FreemiumFinancialTable({ data }: Props) {
           <h3 className="text-sm font-semibold uppercase tracking-wider">Financial Breakdown</h3>
           <InfoTooltip text="Month-by-month projection of revenue, ad spend, profit, and membership counts over 12 months." />
         </div>
-        <Button variant="ghost" size="sm" onClick={() => exportCsv(data)} className="gap-1.5 text-xs">
+        <Button variant="ghost" size="sm" onClick={() => exportCsv(data, showEffectiveCac)} className="gap-1.5 text-xs">
           <Download className="size-3.5" />
           CSV
         </Button>
@@ -66,6 +69,14 @@ export function FreemiumFinancialTable({ data }: Props) {
               <TableHead className="text-right">
                 <span className="inline-flex items-center justify-end gap-1">Premium <InfoTooltip text="Total paying members at the end of this month." /></span>
               </TableHead>
+              {showEffectiveCac && (
+                <TableHead className="text-right">
+                  <span className="inline-flex items-center justify-end gap-1">
+                    Eff. CPA
+                    <InfoTooltip text="Effective free member acquisition cost this month, after compounding audience saturation." />
+                  </span>
+                </TableHead>
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -98,6 +109,11 @@ export function FreemiumFinancialTable({ data }: Props) {
                 <TableCell className="text-right font-mono text-sm">
                   {formatNumber(d.totalPremiumMembers)}
                 </TableCell>
+                {showEffectiveCac && (
+                  <TableCell className="text-right font-mono text-sm text-accent-yellow">
+                    {formatCurrency(d.effectiveCac)}
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>

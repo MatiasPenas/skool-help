@@ -8,6 +8,7 @@ const PARAM_MAP: Record<keyof FreemiumInputs, string> = {
   churnRate: 'churn',
   initialBudget: 'budget',
   reinvestmentPct: 'reinvest',
+  cacGrowthRate: 'cacgrowth',
 };
 
 export function parseFreemiumUrlInputs(): Partial<FreemiumInputs> {

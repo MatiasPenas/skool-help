@@ -14,7 +14,7 @@ export function NumberInput({
   step = 1,
   tooltip,
 }: {
-  label: string;
+  label?: string;
   prefix?: string;
   suffix?: string;
   value: number;
@@ -65,10 +65,10 @@ export function NumberInput({
 
   return (
     <div className="space-y-2">
-      <div className="flex items-center justify-between">
-        <Label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+      {(label || tooltip) && <div className="flex items-center justify-between">
+        {label && <Label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
           {label}
-        </Label>
+        </Label>}
         {tooltip && (
           <div className="relative" ref={tooltipRef}>
             <button
@@ -85,7 +85,7 @@ export function NumberInput({
             )}
           </div>
         )}
-      </div>
+      </div>}
       <div className="relative">
         {prefix && (
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
